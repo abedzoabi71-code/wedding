@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>إيمان — دعوة</title>
+
+<!-- ============================================================
+  طريقة التعديل (اقرأ أولاً)
+  1. ابحث عن تعليقات "EDIT ME" — كل نص وتاريخ ومكان مُعلَّم وسهل التبديل.
+  2. الصورة: ابحث عن "PHOTO PLACEHOLDER" في الأسفل — استبدلها بـ
+     <img src="your-photo.jpg" ...>
+  3. الموسيقى: ابحث عن "MUSIC FILE" بالأسفل — ضع رابط ملف mp3 خاص بك.
+  4. الخريطة: ابحث عن "MAP EMBED" — استبدل رابط src بموقع القاعة الخاصة بك.
+============================================================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#504438;
+    --paper:#f5efe6;
+    --paper-deep:#efe3d1;
+    --paper-shadow:#e5d8c7;
+    --dark-beige:#f2e6d8;
+    --bright-beige:#f9f3ea;
+    --gold:#b89164;
+    --gold-soft:#d8bf92;
+    --blush:#e8d5d2;
+    --sage:#7e685a;
+    --line:rgba(80,68,56,0.18);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(255,255,255,0.72), transparent 22%),
+      radial-gradient(circle at 82% 8%, rgba(190,160,130,0.12), transparent 18%),
+      linear-gradient(180deg, #f6f0e7 0%, #f0e6d9 100%);
+    color:var(--ink);
+    font-family:'Cormorant Garamond', serif;
+    font-weight:400;
+    overflow-x:hidden;
+    max-width:480px;
+    margin-inline:auto;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      repeating-linear-gradient(0deg, rgba(105,85,68,0.025) 0px, rgba(105,85,68,0.025) 1px, transparent 1px, transparent 4px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 5px);
+    opacity:0.8;
+  }
+  body.locked{ overflow:hidden; height:100vh; }
+
+  h1,h2,h3{ font-family:'Cormorant Garamond', serif; margin:0; font-weight:600; letter-spacing:0.02em; }
+  .script{ font-family:'Great Vibes', cursive; }
+  .eyebrow{
+    font-family:'Cormorant Garamond', serif;
+    letter-spacing:0.08em;
+    font-size:0.9rem;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  a{ color:inherit; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- reusable flourish divider ---------- */
+  .flourish{ width:120px; height:18px; margin:1.4rem auto; opacity:0.8; }
+  .flourish line{ stroke:var(--gold); stroke-width:1; }
+  .flourish path{ fill:var(--gold); }
+  .details-section .flourish line{ stroke:var(--gold-soft); }
+  .details-section .flourish path{ fill:var(--gold-soft); }
+
+  /* ---------- reusable vine motif ---------- */
+  .vine path{ fill:none; stroke:var(--gold-soft); stroke-width:1.1; stroke-linecap:round; }
+  .vine circle{ fill:var(--blush); }
+  .vine circle.center{ fill:var(--gold-soft); }
+
+  /* ================= COVER (envelope, tap to open) ================= */
+  .cover{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    cursor:pointer;
+    background:var(--paper);
+  }
+  .cover-panel{
+    position:absolute;
+    left:0; right:0;
+    height:50%;
+    background:var(--paper);
+    overflow:hidden;
+    transition:transform 1.15s cubic-bezier(.7,0,.2,1);
+  }
+  .cover-panel.top{ top:0; }
+  .cover-panel.bottom{ bottom:0; }
+  .cover.opening .cover-panel.top{ transform:translateY(-102%); }
+  .cover.opening .cover-panel.bottom{ transform:translateY(102%); }
+
+  .cover-face{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .cover.opening .cover-face{ opacity:0; transform:scale(0.94); }
+
+  .envelope-lines{ position:absolute; inset:0; width:100%; height:100%; }
+  .envelope-lines path{ fill:none; stroke:var(--line); stroke-width:1; }
+
+  .cover-vine{ position:absolute; top:6%; bottom:8%; width:70px; }
+  .cover-vine.left{ left:6%; }
+  .cover-vine.right{ right:6%; transform:scaleX(-1); }
+
+  .cover-seal{
+    position:relative;
+    width:84px;
+    height:84px;
+    border-radius:46% 54% 52% 48% / 50% 46% 54% 50%;
+    background:radial-gradient(circle at 35% 30%, #6a5947, var(--ink) 75%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(74,63,52,0.35);
+  }
+  .cover-seal-inner{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:1px solid var(--gold-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Amiri', serif;
+    font-style:italic;
+    font-size:1.5rem;
+    color:var(--gold-soft);
+  }
+  .cover-thread{
+    position:absolute;
+    top:50%;
+    width:120px;
+    height:1px;
+    background:var(--gold-soft);
+    opacity:0.6;
+  }
+  .cover-thread.l{ right:calc(50% + 40px); transform:rotate(-4deg); }
+  .cover-thread.r{ left:calc(50% + 40px); transform:rotate(4deg); }
+
+  .cover-chevron{ margin-top:1.6rem; color:var(--gold); animation:coverPulse 2s ease-in-out infinite; }
+  .cover-chevron svg{ width:16px; height:16px; }
+  .cover-tap{
+    margin-top:0.5rem;
+    font-size:0.75rem;
+    letter-spacing:0.25em;
+    color:var(--gold);
+    animation:coverPulse 2s ease-in-out infinite;
+  }
+  @keyframes coverPulse{ 0%,100%{opacity:0.55;} 50%{opacity:1;} }
+
+  /* ================= HERO (archway) ================= */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--paper2);
+    padding:5vh 4vw 0;
+    overflow:hidden;
+  }
+
+  .arch-wrap{
+    position:relative;
+    width:100%;
+    height:90svh;
+    max-height:820px;
+  }
+
+  .arch-shape{ position:absolute; inset:0; width:100%; height:100%; }
+
+  .arch-pillar{
+    position:absolute;
+    top:4%;
+    bottom:0;
+    width:11%;
+  }
+  .arch-pillar.left{ left:0; }
+  .arch-pillar.right{ right:0; transform:scaleX(-1); }
+
+  .arch-content{
+    position:absolute;
+    top:16%;
+    left:0; right:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:0 15%;
+  }
+  .arch-eyebrow{
+    font-family:'Amiri', serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:1.15rem;
+    opacity:0;
+  }
+  .arch-date{
+    font-size:0.95rem;
+    letter-spacing:0.1em;
+    color:var(--ink);
+    margin-top:0.3rem;
+    opacity:0;
+  }
+  .arch-names{
+    margin-top:2.6rem;
+    font-family:'Amiri', serif;
+    font-style:italic;
+    font-size:clamp(2.4rem, 11vw, 3rem);
+    line-height:1.15;
+    color:var(--gold);
+    opacity:0;
+  }
+  .arch-amp{
+    font-family:'Amiri', serif;
+    font-style:italic;
+    font-size:1.2rem;
+    color:var(--sage);
+    display:block;
+    margin:0.2rem 0;
+    opacity:0;
+  }
+  .arch-scroll{
+    margin-top:2.2rem;
+    font-family:'Amiri', serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:0.95rem;
+    opacity:0;
+  }
+  .arch-chevron{ margin-top:0.3rem; opacity:0; }
+  .arch-chevron svg{ width:14px; height:14px; color:var(--gold); }
+
+  body.opened .arch-eyebrow{ animation:fadeUp 1s ease forwards 1.5s; }
+  body.opened .arch-date{ animation:fadeUp 1s ease forwards 1.8s; }
+  body.opened .arch-names{ animation:fadeUp 1.2s ease forwards 2.1s; }
+  body.opened .arch-amp{ animation:fadeUp 1s ease forwards 2.4s; }
+  body.opened .arch-scroll{ animation:fadeUp 1s ease forwards 2.9s; }
+  body.opened .arch-chevron{ animation:fadeUp 1s ease forwards 3.1s, chevBounce 1.6s ease-in-out infinite 4s; }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes chevBounce{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(5px);} }
+
+  /* ---------- water + swans at base of arch ---------- */
+  .arch-water{
+    position:absolute;
+    left:12%; right:12%;
+    bottom:6%;
+    height:22%;
+    overflow:hidden;
+  }
+  .arch-water::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(to bottom, rgba(166,138,100,0.12), rgba(166,138,100,0.3));
+    border-radius:50%/18%;
+  }
+  .hero-swans{
+    position:absolute;
+    left:50%;
+    top:8%;
+    width:58%;
+    transform:translateX(-50%);
+  }
+  .hero-swans .swan-body, .hero-swans .swan-neck{
+    fill:none; stroke:var(--ink); stroke-width:1.2; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:420; stroke-dashoffset:420;
+  }
+  .hero-swans .swan-head{ fill:var(--ink); opacity:0; }
+  body.opened .hero-swans .swan-body, body.opened .hero-swans .swan-neck{ animation:draw 1.8s ease forwards 0.6s; }
+  body.opened .hero-swans .swan-head{ animation:fadeUp 0.6s ease forwards 2.1s; }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+
+  .hero-swans-reflection{
+    position:absolute;
+    left:50%;
+    top:38%;
+    width:58%;
+    transform:translateX(-50%) scaleY(-1);
+    opacity:0.28;
+    filter:blur(0.5px);
+  }
+  .hero-swans-reflection .swan-body, .hero-swans-reflection .swan-neck{
+    fill:none; stroke:var(--ink); stroke-width:1.2; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .hero-swans-reflection .swan-head{ fill:var(--ink); }
+
+  /* ---------- floating petals ---------- */
+  .petal{
+    position:absolute;
+    width:9px; height:9px;
+    background:var(--blush);
+    border-radius:70% 30% 60% 40%;
+    opacity:0;
+  }
+  body.opened .petal{ animation:petalIn 1s ease forwards var(--pd, 2s), petalFloat 6s ease-in-out infinite var(--pd, 2s); }
+  @keyframes petalIn{ from{opacity:0;} to{opacity:0.8;} }
+  @keyframes petalFloat{ 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-14px) rotate(25deg);} }
+
+  /* ---------- corner flowers ---------- */
+  .corner-flowers{ position:absolute; bottom:0; width:34%; opacity:0; }
+  .corner-flowers.left{ left:-2%; }
+  .corner-flowers.right{ right:-2%; transform:scaleX(-1); }
+  body.opened .corner-flowers{ animation:fadeUp 1.2s ease forwards 0.5s; }
+
+  /* ================= SHARED SECTION STYLES ================= */
+  section{ padding:4.5rem 1.3rem; max-width:480px; margin:0 auto; text-align:center; position:relative; }
+  .section--dark{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02)),
+      var(--dark-beige);
+    color:var(--ink);
+    border-top:1px solid rgba(80,68,56,0.08);
+    border-bottom:1px solid rgba(80,68,56,0.08);
+  }
+  .section--paper{
+    background-color: var(--bright-beige);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.14'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='640' height='640' fill='%23f4ebdf'/%3E%3Crect width='640' height='640' filter='url(%23n)' opacity='0.95'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    color:var(--ink);
+  }
+  .paper-ragged{
+    position:relative;
+    overflow:visible;
+  }
+  .paper-ragged::before,
+  .paper-ragged::after{
+    content:"";
+    position:absolute;
+    left:-2.5%;
+    right:-2.5%;
+    height:34px;
+    background:inherit;
+    background-image:inherit;
+    background-size:cover;
+    background-position:center;
+    z-index:0;
+    pointer-events:none;
+  }
+  .paper-ragged::before{
+    top:-14px;
+    border-top-left-radius: 20% 100%;
+    border-top-right-radius: 20% 100%;
+    clip-path: polygon(0% 100%, 0% 62%, 4% 66%, 9% 50%, 14% 68%, 18% 42%, 23% 64%, 29% 34%, 35% 62%, 41% 40%, 48% 66%, 54% 38%, 61% 64%, 67% 40%, 73% 66%, 79% 38%, 85% 64%, 90% 42%, 96% 66%, 100% 58%, 100% 100%);
+  }
+  .paper-ragged::after{
+    bottom:-14px;
+    transform:scaleY(-1);
+    border-bottom-left-radius: 20% 100%;
+    border-bottom-right-radius: 20% 100%;
+    clip-path: polygon(0% 100%, 0% 62%, 4% 66%, 9% 50%, 14% 68%, 18% 42%, 23% 64%, 29% 34%, 35% 62%, 41% 40%, 48% 66%, 54% 38%, 61% 64%, 67% 40%, 73% 66%, 79% 38%, 85% 64%, 90% 42%, 96% 66%, 100% 58%, 100% 100%);
+  }
+  .section--dark > *, .section--paper > *, footer > *{ position:relative; z-index:1; }
+  .section-head{ margin-bottom:2.2rem; }
+  .section-head h2{ font-size:clamp(1.9rem, 6vw, 2.5rem); margin-top:0.5rem; }
+
+  .reveal{ opacity:0; transform:translateY(28px) scale(0.97); filter:blur(6px); transition:opacity 1s cubic-bezier(.2,.7,.3,1), transform 1s cubic-bezier(.2,.7,.3,1), filter 1s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+  .flourish line, .flourish path{ transition: stroke-dashoffset 1.3s ease 0.25s; }
+
+  .quote-section p{
+    font-family:'Amiri', serif;
+    font-size:clamp(1.5rem, 4vw, 2rem); line-height:1.6;
+    color:var(--sage); max-width:420px; margin:0 auto;
+  }
+
+  .story-copy .eyebrow{ margin-bottom:0.4rem; display:block; }
+  .story-copy p{ line-height:1.9; font-weight:400; color:var(--ink); opacity:0.9; font-size:1.1rem; }
+  .story-row{ margin-bottom:2.6rem; }
+  .story-row:last-child{ margin-bottom:0; }
+
+  .details-section{ background:var(--dark-beige); color:var(--ink); }
+  .details-section .eyebrow{ color:var(--gold); }
+  .details-grid{ display:grid; grid-template-columns:1fr; gap:1.4rem; margin-top:2.2rem; }
+  .detail-card{ padding:1.5rem 1rem; border:1px solid rgba(79,67,61,0.16); background:rgba(255,255,255,0.08); border-radius:4px; }
+  .detail-card .label{
+    font-family:'Cormorant Garamond', serif; font-size:0.95rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--sage); margin-bottom:0.5rem; display:block;
+  }
+  .detail-card .value{ font-family:'Amiri', serif; font-size:1.2rem; }
+
+  .map-wrap{
+    margin-top:2.2rem; border-radius:4px; overflow:hidden;
+    border:1px solid var(--line); filter:sepia(20%) saturate(60%);
+  }
+  .map-wrap iframe{ width:100%; height:300px; border:0; display:block; }
+  .directions-link{
+    display:inline-block; margin-top:1.2rem; font-size:0.9rem; letter-spacing:0.05em;
+    color:var(--gold); border-bottom:1px solid var(--gold); padding-bottom:2px; text-decoration:none;
+  }
+
+  .rsvp-section p{ line-height:1.9; max-width:420px; margin:0 auto; opacity:0.9; font-size:1.15rem; }
+  .rsvp-btn{
+    display:inline-block; margin-top:1.8rem; padding:0.9rem 2.2rem;
+    background:var(--ink); color:var(--paper); text-decoration:none; border-radius:999px;
+    font-size:0.8rem; letter-spacing:0.1em; transition:background 0.3s ease, transform 0.3s ease;
+  }
+  .rsvp-btn:hover{ background:var(--sage); transform:translateY(-2px); }
+
+  footer{ padding:3rem 1.3rem 2.5rem; text-align:center; background-color: var(--bright-beige); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.14'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='640' height='640' fill='%23f4ebdf'/%3E%3Crect width='640' height='640' filter='url(%23n)' opacity='0.95'/%3E%3C/svg%3E"); background-size:cover; background-position:center; position:relative; }
+  footer::before, footer::after{
+    content:"";
+    position:absolute;
+    left:-2.5%;
+    right:-2.5%;
+    height:34px;
+    background-color: var(--bright-beige);
+    background-image:inherit;
+    background-size:cover;
+    background-position:center;
+    z-index:0;
+  }
+  footer::before{ top:-14px; border-top-left-radius: 20% 100%; border-top-right-radius: 20% 100%; clip-path: polygon(0% 100%, 0% 62%, 4% 66%, 9% 50%, 14% 68%, 18% 42%, 23% 64%, 29% 34%, 35% 62%, 41% 40%, 48% 66%, 54% 38%, 61% 64%, 67% 40%, 73% 66%, 79% 38%, 85% 64%, 90% 42%, 96% 66%, 100% 58%, 100% 100%); }
+  footer::after{ bottom:-14px; transform:scaleY(-1); border-bottom-left-radius: 20% 100%; border-bottom-right-radius: 20% 100%; clip-path: polygon(0% 100%, 0% 62%, 4% 66%, 9% 50%, 14% 68%, 18% 42%, 23% 64%, 29% 34%, 35% 62%, 41% 40%, 48% 66%, 54% 38%, 61% 64%, 67% 40%, 73% 66%, 79% 38%, 85% 64%, 90% 42%, 96% 66%, 100% 58%, 100% 100%); }
+  footer > *{ position:relative; z-index:1; }
+  .photo-block{
+    width:100%; aspect-ratio:16/10; border-radius:4px;
+    background:
+      repeating-linear-gradient(135deg, rgba(79,67,61,0.06) 0 12px, rgba(79,67,61,0.02) 12px 24px),
+      var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink); font-family:'Cormorant Garamond', serif; font-size:0.9rem; letter-spacing:0.05em;
+    opacity:0.8; border:1px solid var(--line); max-width:340px; margin:0 auto 1.4rem;
+  }
+  footer .script{ font-size:1.7rem; color:var(--ink); }
+  footer .fine{ margin-top:1rem; font-size:0.75rem; letter-spacing:0.05em; opacity:0.7; }
+
+  /* ================= PHOTOGRAPHIC ACCENTS ================= */
+  .photo-warm{ filter:sepia(0.35) saturate(1.15) brightness(0.96) contrast(1.05); }
+
+  #ambient-canvas{
+    position:fixed; inset:0; width:100%; height:100%;
+    pointer-events:none; z-index:45; opacity:0.9;
+  }
+
+  /* ---- arch photo (parallax + ken burns) ---- */
+  .arch-photo-wrap{
+    position:absolute; inset:4% 11% 0 11%;
+    border-radius:50% 50% 0 0 / 24% 24% 0 0;
+    overflow:hidden; z-index:0;
+    box-shadow: inset 0 0 40px rgba(20,15,10,0.35);
+  }
+  .arch-photo-inner{ position:absolute; inset:-6% -2% -6% -2%; }
+  .arch-photo-inner img{
+    width:100%; height:100%; object-fit:cover;
+    transform:scale(1.16);
+    animation: kenburns 22s ease-in-out infinite alternate;
+  }
+  .arch-photo-wrap::after{
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(24,18,12,0.12) 0%, rgba(34,25,17,0.42) 55%, rgba(20,15,10,0.72) 100%);
+  }
+  @keyframes kenburns{ from{ transform:scale(1.16) translateY(0); } to{ transform:scale(1.3) translateY(-2.5%); } }
+  .arch-content{ z-index:2; }
+  .arch-eyebrow, .arch-date, .arch-scroll{ color:var(--bright-beige); text-shadow:0 1px 8px rgba(0,0,0,0.35); }
+  .arch-names{ color:#f3ddb0; text-shadow:0 2px 14px rgba(0,0,0,0.4); cursor:pointer; user-select:none; }
+  .arch-chevron{ color:var(--bright-beige); }
+
+  /* ---- rose frame accent (hosts section) ---- */
+  .rose-frame{
+    width:132px; height:132px; border-radius:50%; margin:0 auto 1.6rem;
+    padding:6px; background:conic-gradient(from 180deg, var(--gold-soft), var(--gold), var(--gold-soft));
+    box-shadow:0 8px 22px rgba(80,68,56,0.25);
+  }
+  .rose-frame-inner{ width:100%; height:100%; border-radius:50%; overflow:hidden; border:2px solid var(--paper); }
+  .rose-frame-inner img{ width:100%; height:100%; object-fit:cover; }
+
+  /* ---- footer photo ---- */
+  .footer-photo{
+    width:100%; aspect-ratio:16/10; border-radius:6px; overflow:hidden;
+    border:1px solid var(--line); max-width:340px; margin:0 auto 1.4rem;
+    box-shadow:0 10px 26px rgba(80,68,56,0.18); position:relative;
+  }
+  .footer-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .footer-photo::after{ content:""; position:absolute; inset:0; box-shadow: inset 0 0 30px rgba(20,15,10,0.25); }
+
+  /* ================= COUNTDOWN WIDGET ================= */
+  .countdown{
+    display:flex; justify-content:center; gap:0.6rem; margin:1.8rem auto 0;
+    max-width:380px; flex-wrap:nowrap;
+  }
+  .countdown .cd-cell{
+    flex:1; padding:0.7rem 0.3rem; border-radius:6px;
+    background:rgba(255,255,255,0.35); border:1px solid rgba(184,145,100,0.35);
+    text-align:center;
+  }
+  .countdown .cd-num{
+    display:block; font-family:'Amiri', serif; font-size:clamp(1.3rem, 5vw, 1.7rem);
+    color:var(--gold); line-height:1;
+  }
+  .countdown .cd-label{
+    display:block; margin-top:0.3rem; font-size:0.65rem; letter-spacing:0.05em;
+    color:var(--sage); text-transform:uppercase;
+  }
+  .countdown.cd-done{
+    justify-content:center;
+  }
+  .cd-done-msg{
+    font-family:'Amiri', serif; font-style:italic; color:var(--gold); font-size:1.15rem;
+  }
+
+  /* ================= CALENDAR / WAZE BUTTON ROW ================= */
+  .action-row{
+    display:flex; gap:0.7rem; justify-content:center; flex-wrap:wrap; margin-top:1.4rem;
+  }
+  .pill-btn{
+    display:inline-flex; align-items:center; gap:0.4rem;
+    padding:0.55rem 1.1rem; border-radius:999px;
+    background:var(--ink); color:var(--paper); text-decoration:none;
+    font-size:0.8rem; letter-spacing:0.03em;
+    transition:background 0.3s ease, transform 0.3s ease;
+    border:1px solid transparent;
+  }
+  .pill-btn:hover{ background:var(--sage); transform:translateY(-2px); }
+  .pill-btn.outline{
+    background:transparent; color:var(--ink); border-color:var(--gold-soft);
+  }
+  .pill-btn.outline:hover{ background:rgba(184,145,100,0.12); }
+  .pill-btn svg{ width:15px; height:15px; flex-shrink:0; }
+
+  /* ================= CONFETTI ================= */
+  .confetti-piece{
+    position:fixed; top:0; left:0; width:8px; height:8px;
+    pointer-events:none; z-index:80; border-radius:2px;
+    animation: confettiBurst 1.15s cubic-bezier(.2,.8,.3,1) forwards;
+  }
+  @keyframes confettiBurst{
+    0%{ transform:translate(0,0) rotate(0deg) scale(1); opacity:1; }
+    100%{ transform:translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.4); opacity:0; }
+  }
+
+  .music-toggle{
+    position:fixed; bottom:1.2rem; left:1.2rem; width:48px; height:48px; border-radius:50%;
+    background:var(--ink); color:var(--paper); border:1px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:50;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  }
+  .music-toggle svg{ width:18px; height:18px; }
+  .music-toggle .bar{ fill:var(--gold-soft); transform-origin:bottom; animation:eq 1s ease-in-out infinite; }
+  .music-toggle.playing .bar:nth-child(1){animation-delay:0s;}
+  .music-toggle.playing .bar:nth-child(2){animation-delay:0.15s;}
+  .music-toggle.playing .bar:nth-child(3){animation-delay:0.3s;}
+  .music-toggle:not(.playing) .bar{animation-play-state:paused; transform:scaleY(0.4);}
+  @keyframes eq{ 0%,100%{transform:scaleY(0.4);} 50%{transform:scaleY(1);} }
+</style>
+</head>
+<body class="locked">
+
+<canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+<!-- ================= COVER: envelope, tap to open ================= -->
+<div class="cover" id="cover" role="button" tabindex="0" aria-label="اضغط لفتح الدعوة">
+  <div class="cover-panel top"></div>
+  <div class="cover-panel bottom"></div>
+
+  <div class="cover-face">
+    <svg class="envelope-lines" viewBox="0 0 300 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L150,270 L300,0"/>
+      <path d="M0,600 L150,330 L300,600"/>
+    </svg>
+
+    <!-- vine motif, left and right -->
+    <svg class="cover-vine vine left" viewBox="0 0 60 400" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30,10 C20,60 40,100 25,150 C15,190 40,230 25,270 C15,310 38,350 28,390"/>
+      <circle class="center" cx="30" cy="60" r="3"/>
+      <circle cx="22" cy="58" r="2.4"/><circle cx="38" cy="58" r="2.4"/><circle cx="30" cy="52" r="2.4"/><circle cx="30" cy="66" r="2.4"/>
+      <circle class="center" cx="24" cy="150" r="3"/>
+      <circle cx="17" cy="148" r="2.2"/><circle cx="31" cy="148" r="2.2"/><circle cx="24" cy="143" r="2.2"/><circle cx="24" cy="155" r="2.2"/>
+      <circle class="center" cx="26" cy="270" r="3"/>
+      <circle cx="19" cy="268" r="2.2"/><circle cx="33" cy="268" r="2.2"/><circle cx="26" cy="263" r="2.2"/><circle cx="26" cy="275" r="2.2"/>
+      <path d="M30,90 Q45,85 48,95" /><path d="M25,190 Q10,185 8,196"/><path d="M28,330 Q43,325 46,336"/>
+    </svg>
+    <svg class="cover-vine vine right" viewBox="0 0 60 400" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30,10 C20,60 40,100 25,150 C15,190 40,230 25,270 C15,310 38,350 28,390"/>
+      <circle class="center" cx="30" cy="60" r="3"/>
+      <circle cx="22" cy="58" r="2.4"/><circle cx="38" cy="58" r="2.4"/><circle cx="30" cy="52" r="2.4"/><circle cx="30" cy="66" r="2.4"/>
+      <circle class="center" cx="24" cy="150" r="3"/>
+      <circle cx="17" cy="148" r="2.2"/><circle cx="31" cy="148" r="2.2"/><circle cx="24" cy="143" r="2.2"/><circle cx="24" cy="155" r="2.2"/>
+      <circle class="center" cx="26" cy="270" r="3"/>
+      <circle cx="19" cy="268" r="2.2"/><circle cx="33" cy="268" r="2.2"/><circle cx="26" cy="263" r="2.2"/><circle cx="26" cy="275" r="2.2"/>
+      <path d="M30,90 Q45,85 48,95" /><path d="M25,190 Q10,185 8,196"/><path d="M28,330 Q43,325 46,336"/>
+    </svg>
+
+    <div class="cover-thread l"></div>
+    <div class="cover-thread r"></div>
+    <div class="cover-seal">
+      <div class="cover-seal-inner">إ</div>
+    </div>
+    <div class="cover-chevron">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 13 L10 7 L16 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="cover-tap">اضغط للفتح</div>
+  </div>
+</div>
+
+<!-- ================= HERO: archway ================= -->
+<section class="hero">
+  <div class="arch-wrap">
+
+    <svg class="arch-shape" viewBox="0 0 300 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f8f2e6"/>
+          <stop offset="60%" stop-color="#f1e6d4"/>
+          <stop offset="100%" stop-color="#e6d5bb"/>
+        </linearGradient>
+      </defs>
+      <path d="M18,460 L18,150 Q18,34 150,16 Q282,34 282,150 L282,460 Z" fill="url(#skyGrad)" stroke="var(--gold-soft)" stroke-width="2"/>
+      <path d="M30,460 L30,155 Q30,50 150,32 Q270,50 270,155 L270,460" fill="none" stroke="var(--line)" stroke-width="1"/>
+    </svg>
+
+    <!-- photographic arch fill: golden pampas field, warm-toned -->
+    <div class="arch-photo-wrap">
+      <div class="arch-photo-inner">
+        <img class="photo-warm" src="https://images.pexels.com/photos/10913078/pexels-photo-10913078.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" loading="eager">
+      </div>
+    </div>
+
+    <!-- carved stone pillars either side -->
+    <svg class="arch-pillar left" viewBox="0 0 40 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="0" width="10" height="30" fill="var(--gold-soft)"/>
+      <rect x="10" y="30" width="6" height="410" fill="var(--paper)" stroke="var(--line)" stroke-width="1"/>
+      <g stroke="var(--line)" stroke-width="0.6">
+        <line x1="8" y1="50" x2="8" y2="440"/><line x1="18" y1="50" x2="18" y2="440"/>
+      </g>
+      <rect x="4" y="435" width="14" height="16" fill="var(--gold-soft)"/>
+    </svg>
+    <svg class="arch-pillar right" viewBox="0 0 40 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="0" width="10" height="30" fill="var(--gold-soft)"/>
+      <rect x="10" y="30" width="6" height="410" fill="var(--paper)" stroke="var(--line)" stroke-width="1"/>
+      <g stroke="var(--line)" stroke-width="0.6">
+        <line x1="8" y1="50" x2="8" y2="440"/><line x1="18" y1="50" x2="18" y2="440"/>
+      </g>
+      <rect x="4" y="435" width="14" height="16" fill="var(--gold-soft)"/>
+    </svg>
+
+    <!-- vines draped over the top corners -->
+    <svg class="vine" viewBox="0 0 120 140" style="position:absolute; top:0; left:6%; width:34%;" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,10 C40,20 60,40 55,70 C50,95 70,105 90,120"/>
+      <circle class="center" cx="55" cy="70" r="3"/><circle cx="48" cy="68" r="2.4"/><circle cx="62" cy="68" r="2.4"/><circle cx="55" cy="62" r="2.4"/>
+      <circle class="center" cx="90" cy="120" r="3"/><circle cx="83" cy="118" r="2.4"/><circle cx="97" cy="118" r="2.4"/>
+    </svg>
+    <svg class="vine" viewBox="0 0 120 140" style="position:absolute; top:0; right:6%; width:34%; transform:scaleX(-1);" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,10 C40,20 60,40 55,70 C50,95 70,105 90,120"/>
+      <circle class="center" cx="55" cy="70" r="3"/><circle cx="48" cy="68" r="2.4"/><circle cx="62" cy="68" r="2.4"/><circle cx="55" cy="62" r="2.4"/>
+      <circle class="center" cx="90" cy="120" r="3"/><circle cx="83" cy="118" r="2.4"/><circle cx="97" cy="118" r="2.4"/>
+    </svg>
+
+    <!-- corner flower clusters -->
+    <svg class="corner-flowers left" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="70" r="16" fill="var(--blush)"/><circle cx="42" cy="82" r="13" fill="var(--gold-soft)"/>
+      <circle cx="10" cy="88" r="11" fill="var(--paper2)" stroke="var(--gold-soft)" stroke-width="1"/>
+      <circle cx="55" cy="60" r="9" fill="var(--blush)"/><circle cx="34" cy="55" r="8" fill="var(--paper2)" stroke="var(--gold-soft)" stroke-width="1"/>
+    </svg>
+    <svg class="corner-flowers right" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="70" r="16" fill="var(--blush)"/><circle cx="42" cy="82" r="13" fill="var(--gold-soft)"/>
+      <circle cx="10" cy="88" r="11" fill="var(--paper2)" stroke="var(--gold-soft)" stroke-width="1"/>
+      <circle cx="55" cy="60" r="9" fill="var(--blush)"/><circle cx="34" cy="55" r="8" fill="var(--paper2)" stroke="var(--gold-soft)" stroke-width="1"/>
+    </svg>
+
+    <!-- floating petals -->
+    <div class="petal" style="top:20%; left:20%; --pd:2.1s;"></div>
+    <div class="petal" style="top:32%; left:70%; --pd:2.6s;"></div>
+    <div class="petal" style="top:48%; left:30%; --pd:3.1s;"></div>
+    <div class="petal" style="top:58%; left:65%; --pd:2.4s;"></div>
+    <div class="petal" style="top:40%; left:50%; --pd:3.4s;"></div>
+
+    <div class="arch-content">
+      <div class="arch-eyebrow">سهيل عثمان زعبي وحرمه منال علي زعبي يتشرفان بدعوتكم</div>
+      <div class="arch-date">لحضور سهرة كريمتهما الغالية</div>
+      <div class="arch-names" id="eman-name" role="button" tabindex="0" aria-label="اضغطي للاحتفال">إيمان</div>
+      <div class="arch-scroll">مرري للأسفل</div>
+      <div class="arch-chevron">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 7 L10 13 L16 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- swans on water -->
+    <div class="arch-water">
+      <svg class="hero-swans" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+        <ellipse class="swan-body" cx="55" cy="145" rx="36" ry="19"/>
+        <ellipse class="swan-body" cx="145" cy="145" rx="36" ry="19"/>
+        <path class="swan-neck" d="M60,148 Q28,108 55,58 Q73,26 100,95"/>
+        <path class="swan-neck" d="M140,148 Q172,108 145,58 Q127,26 100,95"/>
+        <circle class="swan-head" cx="55" cy="56" r="4"/>
+        <circle class="swan-head" cx="145" cy="56" r="4"/>
+      </svg>
+      <svg class="hero-swans-reflection" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+        <ellipse class="swan-body" cx="55" cy="145" rx="36" ry="19"/>
+        <ellipse class="swan-body" cx="145" cy="145" rx="36" ry="19"/>
+        <path class="swan-neck" d="M60,148 Q28,108 55,58 Q73,26 100,95"/>
+        <path class="swan-neck" d="M140,148 Q172,108 145,58 Q127,26 100,95"/>
+        <circle class="swan-head" cx="55" cy="56" r="4"/>
+        <circle class="swan-head" cx="145" cy="56" r="4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUOTE ================= -->
+<section class="quote-section reveal section--paper paper-ragged">
+  <p>"بالطيب والورد نلاقيكم، وبالحب والخير نشكر تهانيكم"</p>
+</section>
+
+<!-- ================= HOSTS / INVITATION ================= -->
+<section id="hosts" class="reveal section--dark">
+  <div class="section-head">
+    <span class="eyebrow">بدعوة من</span>
+    <h2>السيد سهيل عثمان زعبي<br>وحرمه منال علي زعبي</h2>
+    <svg class="flourish" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="46" y2="10"/><path d="M52,10 L60,3 L68,10 L60,17 Z"/><line x1="74" y1="10" x2="120" y2="10"/></svg>
+  </div>
+
+  <div class="rose-frame">
+    <div class="rose-frame-inner">
+      <img class="photo-warm" src="https://images.pexels.com/photos/65254/roses-pink-family-rose-family-65254.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" loading="lazy">
+    </div>
+  </div>
+
+  <div class="story-row">
+    <div class="story-copy">
+      <p>يتشرفان بدعوة حضرتكم لحضور سهرة كريمتهما الغالية</p>
+      <p class="script" style="font-size:2.4rem; color:var(--gold); margin:0.6rem 0;">إيمان</p>
+      <p>وذلك بمشيئة الله تعالى، ولتناول طعام العشاء</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SAHRA DETAILS ================= -->
+<section class="details-section reveal section--dark">
+  <span class="eyebrow">السهرة</span>
+  <h2>الموعد والمكان</h2>
+  <svg class="flourish" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="46" y2="10"/><path d="M52,10 L60,3 L68,10 L60,17 Z"/><line x1="74" y1="10" x2="120" y2="10"/></svg>
+  <div class="details-grid">
+    <div class="detail-card">
+      <span class="label">التاريخ</span>
+      <span class="value">يوم الثلاثاء، ٢٥.٠٨.٢٠٢٦</span>
+    </div>
+    <div class="detail-card">
+      <span class="label">الوقت</span>
+      <span class="value">الساعة السابعة والنصف مساءً</span>
+    </div>
+    <div class="detail-card">
+      <span class="label">المكان</span>
+      <span class="value">قاعة لارينيسانس، نوف هجليل</span>
+    </div>
+  </div>
+
+  <div class="countdown" id="countdown-sahra" data-target="2026-08-25T19:30:00">
+    <div class="cd-cell"><span class="cd-num" data-unit="d">--</span><span class="cd-label">يوم</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="h">--</span><span class="cd-label">ساعة</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="m">--</span><span class="cd-label">دقيقة</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="s">--</span><span class="cd-label">ثانية</span></div>
+  </div>
+
+  <div class="action-row">
+    <a class="pill-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D8%B3%D9%87%D8%B1%D8%A9%20%D8%A5%D9%8A%D9%85%D8%A7%D9%86&dates=20260825T163000Z/20260825T200000Z&details=%D8%B3%D9%87%D8%B1%D8%A9%20%D9%88%D8%B9%D8%B4%D8%A7%D8%A1%20%D8%A8%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9%20%D8%A5%D9%8A%D9%85%D8%A7%D9%86&location=%D9%82%D8%A7%D8%B9%D8%A9%20%D9%84%D8%A7%D8%B1%D9%8A%D9%86%D9%8A%D8%B3%D8%A7%D9%86%D8%B3%D8%8C%20%D9%86%D9%88%D9%81%20%D9%87%D8%AC%D9%84%D9%8A%D9%84" target="_blank" rel="noopener">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="14" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 8h14M7 2.5v3M13 2.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      أضيفي إلى التقويم
+    </a>
+  </div>
+</section>
+
+<!-- ================= LOCATION / MAP ================= -->
+<section id="location" class="reveal section--paper paper-ragged">
+  <div class="section-head">
+    <span class="eyebrow">موقعنا</span>
+    <h2>قاعة لارينيسانس</h2>
+    <svg class="flourish" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="46" y2="10"/><path d="M52,10 L60,3 L68,10 L60,17 Z"/><line x1="74" y1="10" x2="120" y2="10"/></svg>
+    <p style="opacity:0.75;">شارع معاليه إسحق ٢٩، نوف هجليل</p>
+  </div>
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps?q=La+Renaissance+Hall+Maale+Yitzhak+29+Nof+HaGalil&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="خريطة موقع السهرة">
+    </iframe>
+  </div>
+  <a class="pill-btn" href="https://www.waze.com/ul?q=La%20Renaissance%20Hall%20Maale%20Yitzhak%2029%20Nof%20HaGalil&navigate=yes" target="_blank" rel="noopener" style="margin-top:1.4rem;">
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.3"/><circle cx="7.7" cy="9" r="1" fill="currentColor"/><circle cx="12.3" cy="9" r="1" fill="currentColor"/><path d="M7 12.5c1 1 5 1 6 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    الاتجاهات عبر Waze
+  </a>
+</section>
+
+<!-- ================= BRIDE'S ARRIVAL ================= -->
+<section class="details-section reveal section--dark">
+  <span class="eyebrow">طلعة العروس</span>
+  <h2>ندعوكم أيضًا</h2>
+  <svg class="flourish" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="46" y2="10"/><path d="M52,10 L60,3 L68,10 L60,17 Z"/><line x1="74" y1="10" x2="120" y2="10"/></svg>
+  <p style="line-height:1.9; opacity:0.9; font-size:1.1rem; max-width:400px; margin:0 auto 2rem;">كما وندعوكم لحضور طلعة العروس، من بيت والديها</p>
+  <div class="details-grid">
+    <div class="detail-card">
+      <span class="label">التاريخ</span>
+      <span class="value">يوم الجمعة، ٢٨.٠٨.٢٠٢٦</span>
+    </div>
+    <div class="detail-card">
+      <span class="label">الوقت</span>
+      <span class="value">الساعة الثانية ظهرًا</span>
+    </div>
+  </div>
+
+  <div class="countdown" id="countdown-arrival" data-target="2026-08-28T14:00:00">
+    <div class="cd-cell"><span class="cd-num" data-unit="d">--</span><span class="cd-label">يوم</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="h">--</span><span class="cd-label">ساعة</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="m">--</span><span class="cd-label">دقيقة</span></div>
+    <div class="cd-cell"><span class="cd-num" data-unit="s">--</span><span class="cd-label">ثانية</span></div>
+  </div>
+
+  <div class="action-row">
+    <a class="pill-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D8%B7%D9%84%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B3%20-%20%D8%A5%D9%8A%D9%85%D8%A7%D9%86&dates=20260828T110000Z/20260828T130000Z&details=%D8%B7%D9%84%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B9%D8%B1%D9%88%D8%B3%20%D9%85%D9%86%20%D8%A8%D9%8A%D8%AA%20%D9%88%D8%A7%D9%84%D8%AF%D9%8A%D9%87%D8%A7" target="_blank" rel="noopener">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="14" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 8h14M7 2.5v3M13 2.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      أضيفي إلى التقويم
+    </a>
+  </div>
+</section>
+
+<!-- ================= CLOSING BLESSING ================= -->
+<section id="blessing" class="reveal rsvp-section section--dark">
+  <div class="section-head">
+    <span class="eyebrow">وأخيرًا</span>
+    <h2>دامت أفراحكم</h2>
+    <svg class="flourish" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="46" y2="10"/><path d="M52,10 L60,3 L68,10 L60,17 Z"/><line x1="74" y1="10" x2="120" y2="10"/></svg>
+  </div>
+  <p>عامرة بالأفراح</p>
+</section>
+
+<!-- ================= FOOTER (الصورة الوحيدة في الصفحة) ================= -->
+<footer>
+  <!-- PHOTO PLACEHOLDER: استبدلها بـ <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+  <div class="footer-photo">
+    <img class="photo-warm" src="https://images.pexels.com/photos/6581/nature-flowers-summer-plant.jpg?auto=compress&cs=tinysrgb&w=900" alt="" loading="lazy">
+  </div>
+  <div class="script">إيمان</div>
+  <div class="fine">بانتظار حضوركم وشرفكم</div>
+</footer>
+
+<!-- ================= MUSIC TOGGLE ================= -->
+<!-- MUSIC FILE: استبدل الرابط أدناه بملف mp3 خاص بك -->
+<audio id="bg-music" loop preload="none">
+  <source src="your-song.mp3" type="audio/mpeg">
+</audio>
+<button class="music-toggle" id="music-btn" aria-label="تشغيل/إيقاف الموسيقى">
+  <svg viewBox="0 0 20 20"><rect class="bar" x="3" y="6" width="3" height="8" rx="1"/><rect class="bar" x="8.5" y="3" width="3" height="14" rx="1"/><rect class="bar" x="14" y="8" width="3" height="6" rx="1"/></svg>
+</button>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Music toggle
+  const btn = document.getElementById('music-btn');
+  const audio = document.getElementById('bg-music');
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+    }
+  });
+
+  // Tap the envelope to open
+  const cover = document.getElementById('cover');
+  function openInvitation(){
+    if (cover.classList.contains('opening')) return;
+    cover.classList.add('opening');
+    document.body.classList.add('opened');
+    document.body.classList.remove('locked');
+    audio.play().then(() => btn.classList.add('playing')).catch(() => {});
+    setTimeout(() => { cover.style.display = 'none'; }, 1300);
+  }
+  cover.addEventListener('click', openInvitation);
+  cover.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openInvitation(); }
+  });
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------------------------------------------------------------
+  // Flourish "draw on scroll" — measure each line/path once, then
+  // reveal them stroke-by-stroke when their section scrolls in view
+  // ---------------------------------------------------------------
+  const flourishParts = [];
+  document.querySelectorAll('.flourish line, .flourish path').forEach(el => {
+    let len = 60;
+    try { len = el.getTotalLength ? el.getTotalLength() : 60; } catch(e) {}
+    el.style.strokeDasharray = len;
+    el.style.strokeDashoffset = prefersReduced ? 0 : len;
+    flourishParts.push(el);
+  });
+  const flourishIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.flourish line, .flourish path').forEach(el => {
+          el.style.strokeDashoffset = 0;
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .hero').forEach(el => flourishIO.observe(el));
+
+  // ---------------------------------------------------------------
+  // Countdown timers
+  // ---------------------------------------------------------------
+  function startCountdown(id){
+    const wrap = document.getElementById(id);
+    if (!wrap) return;
+    const target = new Date(wrap.dataset.target).getTime();
+    const dEl = wrap.querySelector('[data-unit="d"]');
+    const hEl = wrap.querySelector('[data-unit="h"]');
+    const mEl = wrap.querySelector('[data-unit="m"]');
+    const sEl = wrap.querySelector('[data-unit="s"]');
+    function tick(){
+      const diff = target - Date.now();
+      if (diff <= 0){
+        wrap.classList.add('cd-done');
+        wrap.innerHTML = '<span class="cd-done-msg">اليوم المنتظر وصل 🎉</span>';
+        clearInterval(timer);
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      dEl.textContent = String(d);
+      hEl.textContent = String(h).padStart(2,'0');
+      mEl.textContent = String(m).padStart(2,'0');
+      sEl.textContent = String(s).padStart(2,'0');
+    }
+    tick();
+    const timer = setInterval(tick, 1000);
+  }
+  startCountdown('countdown-sahra');
+  startCountdown('countdown-arrival');
+
+  // ---------------------------------------------------------------
+  // Confetti burst — tap the bride's name
+  // ---------------------------------------------------------------
+  const confettiColors = ['#b89164', '#d8bf92', '#e8d5d2', '#f5efe6', '#7e685a'];
+  function burstConfetti(x, y){
+    if (prefersReduced) return;
+    const count = 26;
+    for (let i = 0; i < count; i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+      const dist = 70 + Math.random() * 90;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 40;
+      piece.style.setProperty('--dx', dx + 'px');
+      piece.style.setProperty('--dy', dy + 'px');
+      piece.style.setProperty('--rot', (Math.random() * 480 - 240) + 'deg');
+      piece.style.left = x + 'px';
+      piece.style.top = y + 'px';
+      piece.style.background = confettiColors[i % confettiColors.length];
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 1250);
+    }
+  }
+  const emanName = document.getElementById('eman-name');
+  if (emanName){
+    const trigger = (evt) => {
+      const rect = emanName.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      burstConfetti(x, y);
+    };
+    emanName.addEventListener('click', trigger);
+    emanName.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); trigger(e); }
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Parallax — arch photo drifts on scroll, subtle pointer tilt
+  // ---------------------------------------------------------------
+  const archPhotoInner = document.querySelector('.arch-photo-inner');
+  const archWrap = document.querySelector('.arch-wrap');
+  let ticking = false;
+  function onScrollParallax(){
+    if (prefersReduced || !archPhotoInner) return;
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+    const rect = heroSection.getBoundingClientRect();
+    const progress = -rect.top / (rect.height || 1);
+    const offset = Math.max(-40, Math.min(40, progress * 70));
+    archPhotoInner.style.transform = `translateY(${offset}px)`;
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking){ requestAnimationFrame(onScrollParallax); ticking = true; }
+  }, { passive: true });
+
+  if (archWrap && !prefersReduced && matchMedia('(pointer:fine)').matches){
+    archWrap.addEventListener('mousemove', (e) => {
+      const rect = archWrap.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      archWrap.querySelectorAll('.arch-pillar, .vine').forEach(el => {
+        el.style.transform = (el.style.transform.includes('scaleX(-1)') ? 'scaleX(-1) ' : '') +
+          `translate(${px * -6}px, ${py * -4}px)`;
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Ambient particle system — soft falling petals + gold dust
+  // ---------------------------------------------------------------
+  (function ambientParticles(){
+    const canvas = document.getElementById('ambient-canvas');
+    if (!canvas || prefersReduced) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    const COUNT = window.innerWidth < 500 ? 18 : 28;
+
+    function resize(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function makeParticle(randomY){
+      const isPetal = Math.random() > 0.4;
+      return {
+        x: Math.random() * w,
+        y: randomY ? Math.random() * h : -20,
+        size: isPetal ? 4 + Math.random() * 5 : 1.5 + Math.random() * 2,
+        speedY: 0.25 + Math.random() * 0.5,
+        speedX: (Math.random() - 0.5) * 0.4,
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: 0.008 + Math.random() * 0.012,
+        rot: Math.random() * Math.PI,
+        rotSpeed: (Math.random() - 0.5) * 0.01,
+        isPetal,
+        opacity: 0.35 + Math.random() * 0.35
+      };
+    }
+    for (let i = 0; i < COUNT; i++) particles.push(makeParticle(true));
+
+    let started = false;
+    function draw(){
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => {
+        p.sway += p.swaySpeed;
+        p.x += p.speedX + Math.sin(p.sway) * 0.3;
+        p.y += p.speedY;
+        p.rot += p.rotSpeed;
+        if (p.y > h + 20){ Object.assign(p, makeParticle(false)); }
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = p.opacity;
+        if (p.isPetal){
+          ctx.fillStyle = '#e8d5d2';
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillStyle = '#d8bf92';
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+      requestAnimationFrame(draw);
+    }
+    function start(){
+      if (started) return;
+      started = true;
+      draw();
+    }
+    // begin once the envelope opens, so it doesn't distract before then
+    cover.addEventListener('click', () => setTimeout(start, 400));
+    cover.addEventListener('keydown', () => setTimeout(start, 400));
+  })();
+</script>
+
+</body>
+</html>
