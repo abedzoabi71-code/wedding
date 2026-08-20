@@ -872,6 +872,24 @@
   audio.addEventListener('loadedmetadata', () => {
     if (audio.currentTime < musicStart) audio.currentTime = musicStart;
   });
+  let resumeMusicOnReturn = false;
+  function pauseMusicOnLeave(){
+    resumeMusicOnReturn = !audio.paused;
+    audio.pause();
+    btn.classList.remove('playing');
+  }
+  function resumeMusicOnReturnIfNeeded(){
+    if (!resumeMusicOnReturn || document.hidden) return;
+    audio.play().then(() => btn.classList.add('playing')).catch(() => {});
+    resumeMusicOnReturn = false;
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pauseMusicOnLeave();
+    else resumeMusicOnReturnIfNeeded();
+  });
+  window.addEventListener('pagehide', pauseMusicOnLeave);
+  window.addEventListener('pageshow', resumeMusicOnReturnIfNeeded);
+  window.addEventListener('beforeunload', pauseMusicOnLeave);
   btn.addEventListener('click', () => {
     if (audio.paused) {
       if (audio.currentTime < musicStart) audio.currentTime = musicStart;
