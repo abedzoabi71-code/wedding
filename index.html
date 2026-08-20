@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>دعوة صهرة ايمان</title>
+<title>إيمان — دعوة</title>
 
 <!-- ============================================================
   طريقة التعديل (اقرأ أولاً)
@@ -850,7 +850,7 @@
 <!-- ================= MUSIC TOGGLE ================= -->
 <!-- MUSIC FILE: استبدل الرابط أدناه بملف mp3 خاص بك -->
 <audio id="bg-music" loop preload="none">
-  <source src="your-song.mp3" type="audio/mpeg">
+  <source src="Music.mp3" type="audio/mpeg">
 </audio>
 <button class="music-toggle" id="music-btn" aria-label="تشغيل/إيقاف الموسيقى">
   <svg viewBox="0 0 20 20"><rect class="bar" x="3" y="6" width="3" height="8" rx="1"/><rect class="bar" x="8.5" y="3" width="3" height="14" rx="1"/><rect class="bar" x="14" y="8" width="3" height="6" rx="1"/></svg>
@@ -867,8 +867,14 @@
   // Music toggle
   const btn = document.getElementById('music-btn');
   const audio = document.getElementById('bg-music');
+  const musicStart = 4;
+  audio.volume = 0.35;
+  audio.addEventListener('loadedmetadata', () => {
+    if (audio.currentTime < musicStart) audio.currentTime = musicStart;
+  });
   btn.addEventListener('click', () => {
     if (audio.paused) {
+      if (audio.currentTime < musicStart) audio.currentTime = musicStart;
       audio.play().catch(() => {});
       btn.classList.add('playing');
     } else {
@@ -884,6 +890,7 @@
     cover.classList.add('opening');
     document.body.classList.add('opened');
     document.body.classList.remove('locked');
+    if (audio.currentTime < musicStart) audio.currentTime = musicStart;
     audio.play().then(() => btn.classList.add('playing')).catch(() => {});
     setTimeout(() => { cover.style.display = 'none'; }, 1450);
   }
